@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+model Category {
+	id Int @id @default(autoincrement())
+	name String @unique
+	ledgerEntries LedgerEntry[]
+}
+model Allocation {
+	id Int @id @default(autoincrement())
+	groupId Int?
+	name String @unique
+	rate Float @default(0)
+	amount Int @default(0) 
+	remind Boolean @default(false)
+	moneyToPut Int @default(0)
+	group Group? @relation(fields: [groupId], references: [id])
+	ledgerEntries LedgerEntry[]
+}
+model Group {
+	id Int @id @default(autoincrement())
+	name String @unique
+	allocations Allocation[]
+	ledgerEntries LedgerEntry[]
+}
+model LedgerEntry {
+	id Int @id @default(autoincrement())
+	date DateTime @default(now())
+	allocationId Int?
+	groupId Int?
+	categoryId Int
+	amount Int
+	record String?
+	allocation Allocation? @relation(fields: [allocationId], references: [id], onDelete: Cascade)
+	group Group? @relation(fields: [groupId], references: [id], onDelete: SetNull)
+	category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+}
+model Task {
+	id Int @id @default(autoincrement())
+	record String
+}

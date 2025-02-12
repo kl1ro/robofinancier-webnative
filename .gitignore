@@ -1,0 +1,5 @@
+core/tools
+dist
+app/api/node_modules
+node_modules
+app/api/.env

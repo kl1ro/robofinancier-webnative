@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.no-scrollbar::-webkit-scrollbar {
+	display: none;
+}
+@keyframes scroll {
+	0% {
+		transform: translateX(110%);
+	}
+	100% {
+		transform: translateX(-250%);
+	}
+}
+.ticker {
+	animation: scroll var(--duration) linear infinite;
+}
